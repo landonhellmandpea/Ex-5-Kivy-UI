@@ -4,11 +4,12 @@
     FloatLayout:
         size_hint: None, None
 
-    DPEAButton:
-        size: 100, 100
-        x: root.width * 0.75
-        y: root.height * 0.5
+    Button:
+        width: 100
+        x: root.width * 0.2
+        y: root.height * 0
         color: 0.035, 0.152, 0.725, 1
+        background_normal: "tree.jpg"
 
         text: "WHERE IS THIS DAMN BUTTON"
         on_press: root.transition2()
