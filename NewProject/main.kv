@@ -2,25 +2,49 @@
     #: import time __main__.time
 
     name: 'main'
+    slide_text: slider_label
     FloatLayout:
         size_hint: None, None
 
     DPEAButton:
         id: test_button
-        text: 'test'
+        text: 'on'
         size: 100, 100
         x: root.width * 0.75
         y: root.height * 0.5
-        color: 0, 1, 0, 1
         on_press: root.pressed()
+        color: 0, 1, 0, 1
 
     DPEAButton:
-        text: "test2"
+        id: button_counter
+        text: "0"
         size: 100, 100
         x: root.width * 0.25
         y: root.height * 0.5
-        color: 1, 0, 0, 1
-        on_press: root.pressed()
+        color: 0, 0, 1, 1
+        on_press: root.pressed2()
+
+    DPEAButton:
+        id: motor
+        text: "Motor"
+        size: 100, 100
+        x: root.width * 0
+        y: root.height * 0.5
+        color: 1, 0, 1, 1
+        on_press: root.pressed3()
+
+    Label:
+        id: motorLabel
+        text: "Motor On"
+        size_hint: None, None
+        font_size: 30
+        center_x: root.width * 0.5
+        center_y: root.height * 0.7
+        color: 1, 1, 1, 1
+        bold: True
+        outline_width: self.font_size * 0.1
+        outline_color: 0, 0, 0
+
 
     SelfUpdatingLabel:
         id: time_label
@@ -34,3 +58,24 @@
         bold: True
         outline_width: self.font_size * 0.1
         outline_color: 0, 0, 0
+
+
+    Label:
+        id: slider_label
+        text: "Slider"
+        font_size: 32
+        size_hint: None, None
+        center_x: root.width * 0.5
+        center_y: root.height * 0.2
+        color: 1, 1, 1, 1
+        bold: True
+        outline_width: self.font_size * 0.1
+        outline_color: 0, 0, 0
+
+    Slider:
+        min: 0
+        max: 100
+        step: 1
+        orientation: "horizontal"
+        on_value: root.slide_it(*args)
+        y: root.height * 0.4

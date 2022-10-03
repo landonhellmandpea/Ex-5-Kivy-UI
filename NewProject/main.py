@@ -7,6 +7,7 @@ from kivy.app import App
 from kivy.core.window import Window
 from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen
+from kivy.uix.slider import Slider
 
 from pidev.MixPanel import MixPanel
 from pidev.kivy.PassCodeScreen import PassCodeScreen
@@ -42,7 +43,6 @@ class ProjectNameGUI(App):
 
 Window.clearcolor = (1, 1, 1, 1)  # White
 
-
 class MainScreen(Screen):
     """
     Class to handle the main screen and its associated touch events
@@ -53,7 +53,42 @@ class MainScreen(Screen):
         Function called on button touch event for button with id: testButton
         :return: None
         """
+        if self.ids.test_button.text == 'on':
+            self.ids.test_button.text = 'off'
+            self.ids.test_button.color = 1, 0, 0, 1
+
+
+        else:
+            self.ids.test_button.text = 'on'
+            self.ids.test_button.color = 0, 1, 0, 1
+
+
         print("Callback from MainScreen.pressed()")
+
+
+    def pressed2(self):
+
+        prior = self.ids.button_counter.text
+        prior = int(prior)
+        prior += 1
+        self.ids.button_counter.text = str(prior)
+
+
+    def pressed3(self):
+
+        if self.ids.motorLabel.text == 'Motor On':
+            self.ids.motorLabel.text = 'Motor Off'
+
+        else:
+            self.ids.motorLabel.text = 'Motor On'
+
+    def slide_it(self, *args):
+        self.slide_text.text = str(int(args[1]))
+        t = int(args[1])
+        t = t / 100
+        self.ids.slider_label.color = 1, 1, 1, t
+
+
 
     def admin_action(self):
         """
