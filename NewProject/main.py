@@ -1,7 +1,7 @@
 import os
 
-#os.environ['DISPLAY'] = ":0.0"
-#os.environ['KIVY_WINDOW'] = 'egl_rpi'
+# os.environ['DISPLAY'] = ":0.0"
+# os.environ['KIVY_WINDOW'] = 'egl_rpi'
 
 from kivy.app import App
 from kivy.core.window import Window
@@ -26,6 +26,7 @@ MIXPANEL = MixPanel("Project Name", MIXPANEL_TOKEN)
 SCREEN_MANAGER = ScreenManager()
 MAIN_SCREEN_NAME = 'main'
 ADMIN_SCREEN_NAME = 'admin'
+EXAMPLE_SCREEN_NAME = 'example'
 
 
 class ProjectNameGUI(App):
@@ -43,10 +44,20 @@ class ProjectNameGUI(App):
 
 Window.clearcolor = (1, 1, 1, 1)  # White
 
+
+class ExampleScreen(Screen):
+
+    def transition2(self):
+        SCREEN_MANAGER.current = MAIN_SCREEN_NAME
+
+
 class MainScreen(Screen):
     """
     Class to handle the main screen and its associated touch events
     """
+
+    def transition1(self):
+        SCREEN_MANAGER.current = EXAMPLE_SCREEN_NAME
 
     def pressed(self):
         """
@@ -62,9 +73,7 @@ class MainScreen(Screen):
             self.ids.test_button.text = 'on'
             self.ids.test_button.color = 0, 1, 0, 1
 
-
         print("Callback from MainScreen.pressed()")
-
 
     def pressed2(self):
 
@@ -72,7 +81,6 @@ class MainScreen(Screen):
         prior = int(prior)
         prior += 1
         self.ids.button_counter.text = str(prior)
-
 
     def pressed3(self):
 
@@ -87,8 +95,6 @@ class MainScreen(Screen):
         t = int(args[1])
         t = t / 100
         self.ids.slider_label.color = 1, 1, 1, t
-
-
 
     def admin_action(self):
         """
@@ -112,8 +118,10 @@ class AdminScreen(Screen):
         """
         Builder.load_file('AdminScreen.kv')
 
-        PassCodeScreen.set_admin_events_screen(ADMIN_SCREEN_NAME)  # Specify screen name to transition to after correct password
-        PassCodeScreen.set_transition_back_screen(MAIN_SCREEN_NAME)  # set screen name to transition to if "Back to Game is pressed"
+        PassCodeScreen.set_admin_events_screen(
+            ADMIN_SCREEN_NAME)  # Specify screen name to transition to after correct password
+        PassCodeScreen.set_transition_back_screen(
+            MAIN_SCREEN_NAME)  # set screen name to transition to if "Back to Game is pressed"
 
         super(AdminScreen, self).__init__(**kwargs)
 
@@ -147,7 +155,9 @@ Widget additions
 """
 
 Builder.load_file('main.kv')
+Builder.load_file('ExampleScreen.kv') #landon make sure to add builder to each kv screen so that you can actually see the damn button...
 SCREEN_MANAGER.add_widget(MainScreen(name=MAIN_SCREEN_NAME))
+SCREEN_MANAGER.add_widget(ExampleScreen(name=EXAMPLE_SCREEN_NAME))
 SCREEN_MANAGER.add_widget(PassCodeScreen(name='passCode'))
 SCREEN_MANAGER.add_widget(PauseScreen(name='pauseScene'))
 SCREEN_MANAGER.add_widget(AdminScreen(name=ADMIN_SCREEN_NAME))
