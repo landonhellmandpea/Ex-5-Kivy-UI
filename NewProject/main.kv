@@ -16,13 +16,15 @@
 
     DPEAButton:
         id: test_button
-        text: 'on'
+        text: 'off'
         size: 100, 100
         x: root.width * 0.75
         y: root.height * 0.5
         on_press: root.pressed()
-        color: 0, 1, 0, 1
-        on_press: root.animate()
+        color: 1, 0, 0, 1
+        on_state:
+            if self.text == 'on': \
+            root.animate()
 
     DPEAButton:
         id: button_counter

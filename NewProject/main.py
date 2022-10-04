@@ -1,7 +1,5 @@
 import os
-print("importing pygame")
 import pygame
-print("initializing pygame")
 pygame.init()
 
 # os.environ['DISPLAY'] = ":0.0"
@@ -64,14 +62,28 @@ class MainScreen(Screen):
     """
     Class to handle the main screen and its associated touch events
     """
+    joystick_location_x = joy.get_axis("x")
+    joystick_location_y = joy.get_axis("y")
+
+    def updateJoy(self, dt):
+        joystick_location_x = joy.get_axis("x")
+        joystick_location_y = joy.get_axis("y")
+        joystick_coordinates = (joystick_location_x, joystick_location_y)
+        self.ids.locationLabelx.text = str(joystick_coordinates)
+
+
+    def __init__(self, **kw):
+        super().__init__(**kw)
+        Clock.schedule_interval(self.updateJoy, 0.001)
+
 
     def animate(self):
-        anim = Animation(x=-100, y=-100) + Animation (x=100, y=100)
-        anim.repeat = True
-        anim.start(self)
-
-    def updateJoy(self):
-        return
+        anim = Animation(x=-100, y=-100) + Animation(x=-100, y=100) + Animation(x=100, y=100) + Animation(x=100, y=-100)
+        if self.ids.test_button.text == 'on':
+            anim.repeat = True
+            anim.start(self)
+        elif self.ids.test_button.text == 'off':
+            anim.stop(self)
 
 
     def transition1(self):
