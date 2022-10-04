@@ -1,4 +1,8 @@
 import os
+print("importing pygame")
+import pygame
+print("initializing pygame")
+pygame.init()
 
 # os.environ['DISPLAY'] = ":0.0"
 # os.environ['KIVY_WINDOW'] = 'egl_rpi'
@@ -8,6 +12,8 @@ from kivy.core.window import Window
 from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.uix.slider import Slider
+from kivy.animation import Animation
+from kivy.clock import Clock
 
 from pidev.MixPanel import MixPanel
 from pidev.kivy.PassCodeScreen import PassCodeScreen
@@ -15,6 +21,7 @@ from pidev.kivy.PauseScreen import PauseScreen
 from pidev.kivy import DPEAButton
 from pidev.kivy import ImageButton
 from pidev.kivy.selfupdatinglabel import SelfUpdatingLabel
+from pidev.Joystick import Joystick
 
 from datetime import datetime
 
@@ -27,6 +34,8 @@ SCREEN_MANAGER = ScreenManager()
 MAIN_SCREEN_NAME = 'main'
 ADMIN_SCREEN_NAME = 'admin'
 EXAMPLE_SCREEN_NAME = 'example'
+
+joy = Joystick(0, False)
 
 
 class ProjectNameGUI(App):
@@ -55,6 +64,15 @@ class MainScreen(Screen):
     """
     Class to handle the main screen and its associated touch events
     """
+
+    def animate(self):
+        anim = Animation(x=-100, y=-100) + Animation (x=100, y=100)
+        anim.repeat = True
+        anim.start(self)
+
+    def updateJoy(self):
+        return
+
 
     def transition1(self):
         SCREEN_MANAGER.current = EXAMPLE_SCREEN_NAME
@@ -89,6 +107,13 @@ class MainScreen(Screen):
 
         else:
             self.ids.motorLabel.text = 'Motor On'
+
+    def pressed4(self):
+
+        joystick_location_x = joy.get_axis("x")
+        joystick_location_y = joy.get_axis("y")
+        joystick_coordinates = (joystick_location_x, joystick_location_y)
+        self.ids.locationLabelx.text = str(joystick_coordinates)
 
     def slide_it(self, *args):
         self.slide_text.text = str(int(args[1]))
@@ -183,3 +208,4 @@ if __name__ == "__main__":
     # send_event("Project Initialized")
     # Window.fullscreen = 'auto'
     ProjectNameGUI().run()
+    joy = Joystick(0, False)

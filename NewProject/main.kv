@@ -22,6 +22,7 @@
         y: root.height * 0.5
         on_press: root.pressed()
         color: 0, 1, 0, 1
+        on_press: root.animate()
 
     DPEAButton:
         id: button_counter
@@ -36,7 +37,7 @@
         id: motor
         text: "Motor"
         size: 100, 100
-        x: root.width * 0
+        x: root.width * 0.05
         y: root.height * 0.5
         color: 1, 0, 1, 1
         on_press: root.pressed3()
@@ -74,7 +75,7 @@
         font_size: 32
         size_hint: None, None
         center_x: root.width * 0.5
-        center_y: root.height * 0.2
+        center_y: root.height * 0.95
         color: 1, 1, 1, 1
         bold: True
         outline_width: self.font_size * 0.1
@@ -83,10 +84,33 @@
 
     DPEAButton:
         size: 100, 100
-        x: root.width * 0.1
-        y: root.height * 0.1
+        x: root.width * 0.05
+        y: root.height * 0.05
         background_color: 0,0,0,0
         color: 0.035, 0.152, 0.725, 1
 
         text: "Don't Press This"
         on_press: root.transition1()
+
+
+    DPEAButton:
+        id: location
+        size: 100, 100
+        x: root.width * 0.05
+        y: root.height * 0.25
+        background_color: 0, 0, 0, 0
+        color: 0.035, 0.035, 0.725, 1
+        text: "Location"
+        on_press: root.pressed4()
+
+    Label:
+        id: locationLabelx
+        text: "0, 0"
+        font_size: 32
+        size_hint: None, None
+        center_x: root.width * 0.5
+        center_y: root.height * 0.3
+        color: 1, 1, 1, 1
+        bold: True
+        outline_width: self.font_size * 0.1
+        outline_color: 0, 0, 0
