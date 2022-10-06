@@ -20,11 +20,10 @@
         size: 100, 100
         x: root.width * 0.75
         y: root.height * 0.5
+        on_press: root.animate()
         on_press: root.pressed()
         color: 1, 0, 0, 1
-        on_state:
-            if self.text == 'on': \
-            root.animate()
+
 
     DPEAButton:
         id: button_counter

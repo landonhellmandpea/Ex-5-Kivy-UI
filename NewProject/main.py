@@ -33,7 +33,7 @@ MAIN_SCREEN_NAME = 'main'
 ADMIN_SCREEN_NAME = 'admin'
 EXAMPLE_SCREEN_NAME = 'example'
 
-joy = Joystick(0, False)
+joy = Joystick(0, True)
 
 
 class ProjectNameGUI(App):
@@ -79,11 +79,13 @@ class MainScreen(Screen):
 
     def animate(self):
         anim = Animation(x=-100, y=-100) + Animation(x=-100, y=100) + Animation(x=100, y=100) + Animation(x=100, y=-100)
+        anim2 = Animation(x=0, y=0)
         if self.ids.test_button.text == 'on':
             anim.repeat = True
             anim.start(self)
         elif self.ids.test_button.text == 'off':
-            anim.stop(self)
+            Animation.cancel_all(self)
+            anim2.start(self)
 
 
     def transition1(self):
