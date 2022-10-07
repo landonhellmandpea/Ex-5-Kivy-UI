@@ -2,7 +2,7 @@ import os
 import pygame
 pygame.init()
 
-# os.environ['DISPLAY'] = ":0.0"
+os.environ['DISPLAY'] = ":0.0" #UNCOMMENT THIS LINE!!
 # os.environ['KIVY_WINDOW'] = 'egl_rpi'
 
 from kivy.app import App
@@ -68,6 +68,8 @@ class MainScreen(Screen):
     def updateJoy(self, dt):
         joystick_location_x = joy.get_axis("x")
         joystick_location_y = joy.get_axis("y")
+        joystick_location_x = round(joystick_location_x * 100)
+        joystick_location_y = round(joystick_location_y * -100)
         joystick_coordinates = (joystick_location_x, joystick_location_y)
         self.ids.locationLabelx.text = str(joystick_coordinates)
 
